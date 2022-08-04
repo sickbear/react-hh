@@ -8,6 +8,7 @@ const  ACTION = {
 }
 
 const BASE_URL = 'https://api.hh.ru/vacancies'
+const SEARCH_TEXT = 'Frontend'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -30,6 +31,7 @@ export default function useFetchJobs(params, page) {
     dispatch({ type: ACTION.MAKE_REQUEST })
     axios.get(BASE_URL, {
       cancelToken: cancelToken.token,
+      params: { text: SEARCH_TEXT }
     }).then(res => {
       console.log(res.data)
       dispatch({ type: ACTION.GET_DATA, payload: { jobs: res.data.items } })

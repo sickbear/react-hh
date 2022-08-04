@@ -6,6 +6,9 @@ export default function Job({ job }) {
   'https://imgholder.ru/50x50/adb9ca/374355&text=no%20logo&font=bebas'
   const description = job.snippet.responsibility ?? 'Описание отсутствует...'
   const [ open, setOpen ] = useState(false)
+  const salaryFrom = job.salary?.from ? `от ${ job.salary.from }` : ''
+  const salaryTo = job.salary?.to ? `до ${ job.salary.to }` : ''
+  const isSalary = salaryFrom || salaryTo ? true : false
 
   return (
     <Card className="mb-3">
@@ -21,9 +24,12 @@ export default function Job({ job }) {
               { new Date(job.created_at).toLocaleDateString() }
             </Card.Subtitle>
             <Badge className="me-2">{ job.schedule.name }</Badge>
-            <Badge>{ job.area.name }</Badge>
-            <div>
-              <a href={ job.alternate_url } target="_blank">{ job.alternate_url }</a>
+            <Badge className="me-2" bg="secondary">{ job.area.name }</Badge>
+
+            { isSalary && <Badge bg="danger">{ `${ salaryFrom } ${ salaryTo } ${ job.salary.currency }` }</Badge> }
+            
+            <div className="pt-2">
+              <Card.Link href={ job.alternate_url } target="_blank">{ job.alternate_url }</Card.Link>
             </div>
           </div>
 
