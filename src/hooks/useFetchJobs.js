@@ -26,11 +26,15 @@ export default function useFetchJobs(params, page) {
   const [ state, dispatch ] = useReducer(reducer, { jobs: [], loading: true})
   
   useEffect(() => {
+    const cancelToken = axios.CancelToken.source()
     dispatch({ type: ACTION.MAKE_REQUEST })
-    axios.get(BASE_URL).then(res => {
+    axios.get(BASE_URL, {
+      cancelToken: cancelToken.token,
+    }).then(res => {
       console.log(res.data)
       dispatch({ type: ACTION.GET_DATA, payload: { jobs: res.data.items } })
     }).catch(e => {
+      if (axios.isCancel(e)) return
       dispatch({ type: ACTION.ERROR, payload: { error: e } })
     })
   }, [params, page])
