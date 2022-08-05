@@ -11,7 +11,7 @@ function App() {
 
   return (
     <Container className="my-4">
-      <h1 className="mb-4">Работа с hh.ru</h1>
+      <h1 className="mb-4">Работа для Frontend-разработчиков с hh.ru</h1>
       <JobsPagination page={ page } setPage={ setPage } hasNextPage={ hasNextPage } />
       { loading && <h1>Загрузка...</h1> }
       { error && <h1>Ошбика. Попробуйте перезагрузить страницу.</h1> }
